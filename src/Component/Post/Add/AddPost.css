@@ -1,0 +1,86 @@
+.admin-page {
+    display: flex;
+}
+
+.side-menu {
+    width: 250px;
+    background-color: #353535;
+    color: white;
+    padding-top: 60px;
+}
+
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #7888a3;
+}
+
+.side-menu ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.side-menu ul li:hover {
+    background-color: #5b5b5b;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    background-color: #353535;
+    padding: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.content {
+    padding: 20px;
+}
+
+.form-container {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    margin-bottom: 8px;
+    display: block;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #536dfe;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #304ffe;
+}
+
+.mess {
+    font-weight: bold;
+    font-size: 20px;
+    color: green;
+    text-align: center;
+    margin: 20px;
+}
+.but {
+    margin-top: 20px;
+}

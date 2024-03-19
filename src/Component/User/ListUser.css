@@ -1,0 +1,66 @@
+.table-container {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.table-container th {
+    background-color: #f2f2f2;
+}
+
+.table-container tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-container tbody tr:hover {
+    background-color: #dddddd;
+}
+
+.password-cell {
+    font-size: 10px;
+    padding: 2px;
+}
+
+.admin-page {
+    display: flex;
+}
+
+.side-menu {
+    width: 200px;
+    background-color: #353535;
+    color: white;
+    padding-top: 60px;
+    height: 720px;
+}
+
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #7888a3;
+}
+
+.side-menu ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.side-menu ul li:hover {
+    background-color: #5b5b5b;
+}
+
+.account {
+    margin: 20px;
+}
