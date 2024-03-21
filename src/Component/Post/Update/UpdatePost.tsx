@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './AddPost.css';
+import './UpdatePost.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Adds } from '../../../Authorization/Api';
-import { Select } from 'antd';
+import { Select, Form, Input, Button, Spin } from 'antd';
 
 interface PostData {
     title: string;
@@ -13,6 +13,10 @@ interface PostData {
     ownerId: number;
 }
 
+interface OwnerData {
+    id: number;
+    name: string;
+}
 
 const UpdatePost: React.FC = () => {
     const navigate = useNavigate();
@@ -25,123 +29,104 @@ const UpdatePost: React.FC = () => {
         status: 0,
         ownerId: 0
     });
-    const [idNamePairs, setIdNamePairs] = useState([]);
-
-    useEffect(() => {
-        const idNamePairsString = localStorage.getItem('idNamePairs');
-        if (idNamePairsString) {
-            setIdNamePairs(JSON.parse(idNamePairsString));
-        }
-    }, []);
+    const [idNamePairs, setIdNamePairs] = useState<OwnerData[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/posts/${id}`);
-                const postData = response.data;
+                const response = await axios.get(`http://localhost:3003/posts/${id}`);
+                const postData: PostData = response.data;
                 setFormData(postData);
+                setLoading(false);
             } catch (error) {
                 console.error('Lỗi khi lấy dữ liệu sản phẩm:', error);
             }
         };
 
         fetchData();
+
+        const idNamePairsString = localStorage.getItem('idNamePairs');
+        if (idNamePairsString) {
+            setIdNamePairs(JSON.parse(idNamePairsString));
+        }
     }, [id]);
 
-    const handleChange = (value: number, option: any) => {
-        setFormData((prevFormData) => ({ ...prevFormData, ownerId: value }));
+    const handleChange = (value: string) => {
+        setFormData((prevFormData) => ({ ...prevFormData, ownerId: parseInt(value) }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onFinish = async (values: any) => {
         try {
-            const { title, summary, status, content } = formData;
-            const postData = { title, summary, status, content, ownerId: formData.ownerId };
+            const { title, summary, status, content } = values;
+            const postData = { title, summary, status: parseInt(status), content, ownerId: formData.ownerId };
             const res = await axios.put(`${Adds}/${id}`, postData);
-            console.log('Post updated:', res.data);
+            console.log(res);
             setMess('Cập nhật thành công. Chuyển trang sau 2s.');
             setTimeout(() => {
                 navigate('/list');
             }, 2000);
         } catch (error) {
             console.error('Lỗi khi cập nhật sản phẩm:', error);
+            setMess('Có lỗi xảy ra khi cập nhật sản phẩm.');
         }
     };
+
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div className="admin-page">
-            <nav className="side-menu">
-                <ul>
-                    <li><a href="/list">Sản phẩm</a></li>
-                    <li><a href="/user">Tài khoản</a></li>
-                </ul>
-            </nav>
-            <main>
-                <header>
-                    <h1>Admin</h1>
-                </header>
-                <div className="content">
-                    <h2>Cập nhật</h2>
-                    <div className="form-container">
-                        {mess && <div className='mess'>{mess}</div>}
+        <div className="content">
+            <h2 className='titles'>Cập nhật</h2>
+            <div className="form-container">
+                <Form
+                    name="updatePostForm"
+                    initialValues={formData}
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    style={{ maxWidth: 600 }}
+                    autoComplete="off"
+                    onFinish={onFinish}
+                    className='forms'
+                >
+                    <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please input your title!' }]}>
+                        <Input />
+                    </Form.Item>
 
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label>Title:</label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Summary:</label>
-                                <textarea
-                                    name="summary"
-                                    value={formData.summary}
-                                    onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Content:</label>
-                                <textarea
-                                    name="content"
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Status:</label>
-                                <input
-                                    type="number"
-                                    name="status"
-                                    value={formData.status}
-                                    onChange={(e) => setFormData({ ...formData, status: parseInt(e.target.value, 10) })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Owner ID:</label>
-                                <Select
-                                    style={{ width: 170 }}
-                                    value={formData.ownerId}
-                                    onChange={handleChange}
-                                >
-                                    {idNamePairs.map(({ id, name }) => (
-                                        <Select.Option key={id} value={id}>{id} - {name}</Select.Option>
-                                    ))}
-                                </Select>
+                    <Form.Item label="Summary" name="summary" rules={[{ required: true, message: 'Please input your summary!' }]}>
+                        <Input.TextArea />
+                    </Form.Item>
 
-                            </div>
-                            <button className='but' type="submit">Cập nhật</button>
-                        </form>
+                    <Form.Item label="Content" name="content" rules={[{ required: true, message: 'Please input your content!' }]}>
+                        <Input.TextArea />
+                    </Form.Item>
 
-                    </div>
-                </div>
-            </main>
+                    <Form.Item label="Status" name="status" rules={[{ required: true, message: 'Please input your status!' }]}>
+                        <Input type="number" />
+                    </Form.Item>
+
+                    {idNamePairs.length > 0 && (
+                        <Form.Item label="Owner ID">
+                            <Select
+                                style={{ width: 170 }}
+                                onChange={handleChange}
+                                defaultValue={formData.ownerId.toString()}
+                            >
+                                {idNamePairs.map(({ id, name }) => (
+                                    <Select.Option key={id} value={id.toString()}>{id} - {name}</Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    )}
+
+                    <Form.Item>
+                        <Button type="primary" className='butons' htmlType="submit">Cập nhật</Button>
+                    </Form.Item>
+                    {mess && <div className='messa'>    <Spin size="large" /></div>}
+                </Form>
+            </div>
         </div>
     );
 };

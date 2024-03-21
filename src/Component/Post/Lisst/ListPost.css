@@ -1,87 +1,10 @@
-.table-container {
-    font-family: Arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 25px;
+.add-button{
+    margin-bottom: 30px;
+    margin-top: 20px;
 }
-
-.table-container th,
-.table-container td {
-    border: 1px solid #dddddd;
-    padding: 15px;
+.Update{
+margin-left: 20%;
 }
-
-.table-container th {
-    background-color: #f2f2f2;
-    text-align: left;
-    font-weight: bold;
-}
-
-.table-container tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.table-container tr:hover {
-    background-color: #dddddd;
-}
-
-.admin-page {
-    display: flex;
-}
-
-.side-menu {
-    width: 200px;
-    background-color: #353535;
-    color: white;
-    padding-top: 60px;
-    height: 720px;
-}
-
-.side-menu ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.side-menu ul li {
-    padding: 10px 20px;
-    border-bottom: 1px solid #7888a3;
-}
-
-.side-menu ul li a {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.side-menu ul li:hover {
-    background-color: #5b5b5b;
-}
-
-.table {
-    margin: 20px;
-
-    .h1 {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-}
-
-.add-button {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
-.add-button a {
-    text-decoration: none;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.add-button a:hover {
-    background-color: #0056b3;
+.Deletes{
+    margin-left: 10%;
 }

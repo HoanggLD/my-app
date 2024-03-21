@@ -136,6 +136,7 @@ body {
     margin-bottom: 20px; 
     font-size: 20px;
     font-weight: bold; 
+    text-align: center;
 }
 
 .error-message{
@@ -158,4 +159,7 @@ body {
     background-color: #d0e9c6; 
     border-color: #c0e0b6;
     transition: background-color 0.3s, border-color 0.3s; 
+}
+.icon {
+   padding-left: 10px;
 }

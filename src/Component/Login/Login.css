@@ -70,6 +70,10 @@ body {
     position: absolute;
     left: 3px;
 }
+.icon {
+    text-align: center;
+    padding-top: 10px;
+}
 
 .inputField {
     width: 100%;

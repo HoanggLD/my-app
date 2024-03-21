@@ -1,0 +1,12 @@
+.containera {
+    display: flex;
+  }
+  
+  .column1 {
+    flex: 2;
+  }
+  
+  .column2 {
+    flex: 8;
+  }
+  

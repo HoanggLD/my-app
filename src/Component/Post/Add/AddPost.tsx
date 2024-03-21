@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './AddPost.css';
+import  { useState, useEffect } from 'react';
+import './AddPost.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Adds } from '../../../Authorization/Api';
-import { Select } from 'antd';
+import { Select, Form, Input, Button,Spin  } from 'antd';
 
 const AddPost = () => {
     const navigate = useNavigate();
     const [mess, setMess] = useState('');
-    const [formData, setFormData] = useState({
-        title: '',
-        summary: '',
-        content: '',
-        status: 0,
-        ownerId: 0
-    });
     const [idNamePairs, setIdNamePairs] = useState([]);
+    const [form] = Form.useForm();
 
     useEffect(() => {
         const idNamePairsString = localStorage.getItem('idNamePairs');
@@ -25,13 +19,13 @@ const AddPost = () => {
     }, []);
 
     const handleChange = (value: number, option: any) => {
-        setFormData({ ...formData, ownerId: value });
+        form.setFieldsValue({ ownerId: value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onFinish = async (values: any) => {
         try {
-            const res = await axios.post(Adds, formData);
+            values.status = parseInt(values.status);
+            const res = await axios.post(Adds, values);
             console.log('Post created:', res.data);
             setMess('Thêm thành công. Chuyển trang sau 2s.');
             setTimeout(() => {
@@ -43,80 +37,43 @@ const AddPost = () => {
     };
 
     return (
-        <div className="admin-page">
-            <nav className="side-menu">
-                <ul>
-                    <li><a href="/list">Sản phẩm</a></li>
-                    <li><a href="/user">Tài khoản</a></li>
-                </ul>
-            </nav>
-            <main>
-                <header>
-                    <h1>Admin</h1>
-                </header>
-                <div className="content">
-                    <h2>Thêm</h2>
-                    <div className="form-container">
-                        {mess && <div className='mess'>{mess}</div>}
-
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label>Title:</label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Summary:</label>
-                                <textarea
-                                    name="summary"
-                                    value={formData.summary}
-                                    onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Content:</label>
-                                <textarea
-                                    name="content"
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Status:</label>
-                                <input
-                                    type="number"
-                                    name="status"
-                                    value={formData.status}
-                                    onChange={(e) => setFormData({ ...formData, status: parseInt(e.target.value, 10) })}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Owner ID:</label>
-                                <Select
-                                    style={{ width: 170 }}
-                                    value={formData.ownerId}
-                                    onChange={handleChange}
-                                >
-                                    {idNamePairs.map(({ id, name }) => (
-                                        <Select.Option key={id} value={id}>{id} - {name}</Select.Option>
-                                    ))}
-                                </Select>
-                            </div>
-                            <button className='but' type="submit">Thêm</button>
-                        </form>
-
-                    </div>
+            <>
+                <h1 className='title'>THÊM</h1>
+                <div className="">
+                    {mess && <div className='mess'>{mess}     <Spin size="large" /></div>}
+                    <Form form={form} onFinish={onFinish} name="basic"
+                        labelCol={{ span: 8 }}
+                        wrapperCol={{ span: 16 }}
+                        style={{ maxWidth: 600 }}
+                        initialValues={{ remember: true }}
+                        autoComplete="off">
+                        <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please input the title!' }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name="summary" label="Summary" rules={[{ required: true, message: 'Please input the summary!' }]}>
+                            <Input.TextArea />
+                        </Form.Item>
+                        <Form.Item name="content" label="Content" rules={[{ required: true, message: 'Please input the content!' }]}>
+                            <Input.TextArea />
+                        </Form.Item>
+                        <Form.Item name="status" label="Status" rules={[{ required: true, message: 'Please input the status!' }]}>
+                            <Input type="number" />
+                        </Form.Item>
+                        <Form.Item name="ownerId" label="Owner ID">
+                            <Select style={{ width: 170 }} onChange={handleChange}>
+                                {idNamePairs.map(({ id, name }) => (
+                                    <Select.Option key={id} value={id}>{id} - {name}</Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button className='but' type="primary" htmlType="submit">
+                                Thêm
+                            </Button>
+                        </Form.Item>
+                    </Form>
                 </div>
-            </main>
-        </div>
+            </>
     );
 };
 

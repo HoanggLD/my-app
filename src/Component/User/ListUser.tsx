@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ListUser.css';
+import { Link } from 'react-router-dom';
+import { Button, Popconfirm, message } from 'antd';
+import axios from 'axios';
 
 interface Account {
     id: number;
@@ -29,13 +32,12 @@ const AccountList: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        fetch('http://localhost:3001/auth')
+        fetch('http://localhost:3003/auth')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Lỗi');
                 }
                 return response.json();
-                
             })
             .then((responseData: { data: Account[] }) => {
                 if (Array.isArray(responseData.data)) {
@@ -57,54 +59,77 @@ const AccountList: React.FC = () => {
             });
     }, []);
 
+    const handleDelete = (id: number) => {
+        axios.delete(`http://localhost:3003/auth/${id}`)
+            .then(response => {
+                console.log('Xóa sản phẩm thành công', response.data);
+                setAccounts(prevAccounts => prevAccounts.filter(account => account.id !== id));
+                message.success('Xóa sản phẩm thành công');
+            })
+            .catch(error => {
+                message.error('Lỗi khi xóa sản phẩm');
+            });
+    };
+
+    const confirmDelete = (id: number) => {
+        handleDelete(id);
+    };
+
+    const cancelDelete = () => {
+        message.error('Đã hủy xóa sản phẩm');
+    };
+
     return (
-        <div>
-            <div>
-                <div className="admin-page">
-                    <nav className="side-menu">
-                        <ul>
-                            <li><a href="/list">Sản phẩm</a></li>
-                            <li><a href="/user">Tài khoản</a></li>
-                        </ul>
-                    </nav>
-                    <main>
-                        <header>
-                            <h1>Admin</h1>
-                        </header>
-                        <div className='account'>
-                            <h1>Account List</h1>
-                            {error && <div>{error}</div>}
-                            <table className="table-container">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Email</th>
-                                        <th>Name</th>
-                                        <th>Password</th>
-                                        <th>Phone</th>
-                                        <th>Status</th>
-                                        <th>Created At</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {accounts.map((account: Account) => (
-                                        <tr key={account.id}>
-                                            <td>{account.id}</td>
-                                            <td>{account.email}</td>
-                                            <td>{account.name}</td>
-                                            <td>
-                                                <span className="password-cell">{'*'.repeat(account.password.length)}</span>
-                                            </td>
-                                            <td>{account.phone}</td>
-                                            <td>{account.status}</td>
-                                            <td>{account.createdAt}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </main>
-                </div>
+        <div className="admin-page">
+            <div className='account'>
+                <h1>Account List</h1>
+                {error && <div>{error}</div>}
+                <table className="table-container">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {accounts.map((account: Account) => (
+                            <tr key={account.id}>
+                                <td>{account.id}</td>
+                                <td>{account.email}</td>
+                                <td>{account.name}</td>
+                                <td>
+                                    <span className="password-cell">{'*'.repeat(account.password.length)}</span>
+                                </td>
+                                <td>{account.phone}</td>
+                                <td>{account.status}</td>
+                                <td>{account.createdAt}</td>
+                                <td>
+                                    <Link to={`/updates/${account.id}`}>
+                                        <Button type="primary">Cập nhật</Button>
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Popconfirm
+                                        title="Bạn có chắc chắn muốn xóa không"
+                                        onConfirm={() => confirmDelete(account.id)}
+                                        onCancel={cancelDelete}
+                                        okText="Có"
+                                        cancelText="Không"
+                                    >
+                                        <Button className='Deletes' type="primary" danger>Xóa</Button>
+                                    </Popconfirm>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

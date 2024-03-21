@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './auth.css'
 import { useNavigate } from 'react-router-dom';
 import { registerApiUrl } from '../../Authorization/Api';
+import { Spin } from 'antd';
 
 interface FormData {
     email: string;
@@ -60,7 +61,9 @@ const RegisterPage: React.FC = () => {
     return (
         <div className="container">
             <form action="" className="form_main" onSubmit={handleSubmit}>
-                {registrationStatus === 'success' && <p className="success-message">Đăng ký thành công! Chuyển đến đăng nhập sau 2s</p>}
+                {registrationStatus === 'success' && <p className="success-message">Đăng ký thành công! Chuyển đến đăng nhập sau 2s  <span className='icon'>
+                    <Spin />
+                </span></p>}
                 {registrationStatus === 'emailExists' && <p className="error-message">Email đã tồn tại!</p>}
                 {registrationStatus === 'error' && <p className="error-message">Đăng ký không thành công!</p>}
                 <p className="heading">Đăng ký tài khoản</p>
