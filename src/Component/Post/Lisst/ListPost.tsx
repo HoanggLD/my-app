@@ -32,7 +32,7 @@ const ListPost: React.FC = () => {
                 }
             })
             .catch(error => {
-                console.error('Lỗi hiển thị dữ liệu.', error);
+                console.error('Lỗi hiển thị dữ liệu', error);
             });
     }, []);
 

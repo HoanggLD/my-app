@@ -18,7 +18,9 @@ export const router = createBrowserRouter([
         {path: "updates/:id", element: <UpdateUser/>},
         {path: "update/:id", element: <UpdatePost />},
         {path: "list", element: <ListPost/>},
-        {path: "add", element: <AddPost/>},
+        {path: "add", element: <AddPost/>}
 
+
+        
     ]},
 ])
