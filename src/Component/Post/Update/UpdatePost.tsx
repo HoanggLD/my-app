@@ -12,12 +12,10 @@ interface PostData {
     status: number;
     ownerId: number;
 }
-
 interface OwnerData {
     id: number;
     name: string;
 }
-
 const UpdatePost: React.FC = () => {
     const navigate = useNavigate();
     const { id } = useParams();
@@ -31,7 +29,6 @@ const UpdatePost: React.FC = () => {
     });
     const [idNamePairs, setIdNamePairs] = useState<OwnerData[]>([]);
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,11 +48,9 @@ const UpdatePost: React.FC = () => {
             setIdNamePairs(JSON.parse(idNamePairsString));
         }
     }, [id]);
-
     const handleChange = (value: string) => {
         setFormData((prevFormData) => ({ ...prevFormData, ownerId: parseInt(value) }));
     };
-
     const onFinish = async (values: any) => {
         try {
             const { title, summary, status, content } = values;
@@ -71,12 +66,9 @@ const UpdatePost: React.FC = () => {
             setMess('Có lỗi xảy ra khi cập nhật sản phẩm.');
         }
     };
-
-
     if (loading) {
         return <div>Loading...</div>;
     }
-
     return (
         <div className="content">
             <h2 className='titles'>Cập nhật</h2>
@@ -120,15 +112,13 @@ const UpdatePost: React.FC = () => {
                             </Select>
                         </Form.Item>
                     )}
-
                     <Form.Item>
                         <Button type="primary" className='butons' htmlType="submit">Cập nhật</Button>
                     </Form.Item>
-                    {mess && <div className='messa'>    <Spin size="large" /></div>}
+                    {mess && <div className='messa'><Spin size="large" /></div>}
                 </Form>
             </div>
         </div>
     );
 };
-
 export default UpdatePost;

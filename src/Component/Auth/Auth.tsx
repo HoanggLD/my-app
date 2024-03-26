@@ -3,7 +3,6 @@ import './auth.css'
 import { useNavigate } from 'react-router-dom';
 import { registerApiUrl } from '../../Authorization/Api';
 import { Spin } from 'antd';
-
 interface FormData {
     email: string;
     password: string;
@@ -25,13 +24,10 @@ const RegisterPage: React.FC = () => {
         status: 0
     });
     const [registrationStatus, setRegistrationStatus] = useState<string>('');
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.name === 'status' ? parseInt(e.target.value) : e.target.value;
         setFormData({ ...formData, [e.target.name]: value });
     };
-
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
@@ -42,7 +38,6 @@ const RegisterPage: React.FC = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
             const responseData: ApiResponse = await response.json();
             if (responseData.message === 'email') {
                 setRegistrationStatus('emailExists');
@@ -75,7 +70,6 @@ const RegisterPage: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange} required />
                 </div>
-
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2e2e2e" viewBox="0 0 16 16">
                         <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
@@ -85,7 +79,6 @@ const RegisterPage: React.FC = () => {
                         value={formData.password}
                         onChange={handleChange} required />
                 </div>
-
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2e2e2e" viewBox="0 0 16 16">
                         <path d="M12 1H4a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3zm-1 8h-2v2h-2v-2H5V8h2V6h2v2h2v1z" />
@@ -95,7 +88,6 @@ const RegisterPage: React.FC = () => {
                         value={formData.phone}
                         onChange={handleChange} required />
                 </div>
-
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2e2e2e" viewBox="0 0 16 16">
                         <path d="M8 1c1.104 0 2 .896 2 2v4H6V3c0-1.104.896-2 2-2zm-1 6V3a3 3 0 0 0-6 0v4c0 1.104.896 2 2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9c1.104 0 2-.896 2-2zm-3 4a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"></path>
@@ -105,7 +97,6 @@ const RegisterPage: React.FC = () => {
                         value={formData.name}
                         onChange={handleChange} required />
                 </div>
-
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2e2e2e" viewBox="0 0 16 16">
                         <path d="M8 1c1.104 0 2 .896 2 2v4H6V3c0-1.104.896-2 2-2zm-1 6V3a3 3 0 0 0-6 0v4c0 1.104.896 2 2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9c1.104 0 2-.896 2-2zm-3 4a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"></path>
@@ -116,17 +107,10 @@ const RegisterPage: React.FC = () => {
                         onChange={handleChange}
                         required />
                 </div>
-
-
                 <button id="button">Đăng Ký</button>
                 <a className="forgotLink" href="/login">Hãy đăng nhập ở đây !</a>
             </form>
         </div>
-
-
     );
 };
-
-
-
 export default RegisterPage;

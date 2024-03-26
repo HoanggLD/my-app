@@ -4,8 +4,6 @@ import './ListPost.css';
 import { Link } from 'react-router-dom';
 import { Lists } from '../../../Authorization/Api';
 import { Button, message, Popconfirm } from 'antd';
-
-
 interface Product {
     id: number;
     title: string;
@@ -19,7 +17,6 @@ interface Product {
         phone: string;
     };
 }
-
 const ListPost: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
@@ -35,7 +32,6 @@ const ListPost: React.FC = () => {
                 console.error('Lỗi hiển thị dữ liệu', error);
             });
     }, []);
-
     const handleDelete = (id: number) => {
         axios.delete(`http://localhost:3003/posts/${id}`)
             .then(response => {
@@ -47,15 +43,12 @@ const ListPost: React.FC = () => {
                 message.error('Lỗi khi xóa sản phẩm');
             });
     };
-
     const confirmDelete = (id: number) => {
         handleDelete(id);
     };
-
     const cancelDelete = () => {
         message.error('Đã hủy xóa sản phẩm');
     };
-
     return (
         <div className='table'>
             <h1 className='h1'>Danh sách sản phẩm</h1>
@@ -109,5 +102,4 @@ const ListPost: React.FC = () => {
         </div>
     );
 };
-
 export default ListPost;

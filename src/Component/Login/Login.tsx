@@ -3,7 +3,7 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import { Logins } from '../../Authorization/Api';
 import { Spin } from 'antd';
-import {  message } from 'antd';
+import { message } from 'antd';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +12,6 @@ const Login: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate()
   const [, contextHolder] = message.useMessage();
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -25,7 +24,7 @@ const Login: React.FC = () => {
       });
       if (!response.ok) {
         throw new Error('Invalid credentials');
-      } else{
+      } else {
         setSuccessMessage('Đang chuyển sang trang chủ sau 2s');
         setError('')
         setTimeout(() => {
@@ -37,13 +36,6 @@ const Login: React.FC = () => {
       setSuccessMessage('')
     }
   };
-  // const success = () => {
-  //   messageApi.open({
-  //     type: 'success',
-  //     content: 'Đăng nhập thành công !',
-  //   });
-  // };
-
   return (
     <div className="containers">
       <form className="form_mains" onSubmit={handleLogin}>
@@ -63,12 +55,10 @@ const Login: React.FC = () => {
           <input type="password" className="inputField" id="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         {contextHolder}
-        {/* <button onClick={success} type="submit" id="button">Đăng nhập</button> */}
-        <button  type="submit" id="button">Đăng nhập</button>
-        <a className="forgotLink" href="/">Đăng ký tài khoản mới.</a>
+        <button type="submit" id="button">Đăng nhập</button>
+        <a className="forgotLink" href="/sigin">Đăng ký tài khoản mới.</a>
       </form>
     </div>
   );
 };
-
 export default Login;

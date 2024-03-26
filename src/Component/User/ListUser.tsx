@@ -3,6 +3,7 @@ import './ListUser.css';
 import { Link } from 'react-router-dom';
 import { Button, Popconfirm, message } from 'antd';
 import axios from 'axios';
+import { ListUser } from '../../Authorization/Api';
 
 interface Account {
     id: number;
@@ -14,7 +15,6 @@ interface Account {
     createdAt: string;
     updatedAt: string;
 }
-
 const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleString('en-US', {
@@ -26,13 +26,11 @@ const formatDate = (dateString: string): string => {
     });
     return formattedDate;
 };
-
 const AccountList: React.FC = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [error, setError] = useState<string | null>(null);
-
     useEffect(() => {
-        fetch('http://localhost:3003/auth')
+        fetch(ListUser)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Lỗi');
@@ -58,7 +56,6 @@ const AccountList: React.FC = () => {
                 setError('Lỗi hiển thị tài khoản' + error.message);
             });
     }, []);
-
     const handleDelete = (id: number) => {
         axios.delete(`http://localhost:3003/auth/${id}`)
             .then(response => {
@@ -70,15 +67,12 @@ const AccountList: React.FC = () => {
                 message.error('Lỗi khi xóa sản phẩm');
             });
     };
-
     const confirmDelete = (id: number) => {
         handleDelete(id);
     };
-
     const cancelDelete = () => {
         message.error('Đã hủy xóa sản phẩm');
     };
-
     return (
         <div className="admin-page">
             <div className='account'>

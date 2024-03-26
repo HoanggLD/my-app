@@ -10,18 +10,15 @@ const AddPost = () => {
     const [mess, setMess] = useState('');
     const [idNamePairs, setIdNamePairs] = useState([]);
     const [form] = Form.useForm();
-
     useEffect(() => {
         const idNamePairsString = localStorage.getItem('idNamePairs');
         if (idNamePairsString) {
             setIdNamePairs(JSON.parse(idNamePairsString));
         }
     }, []);
-
-    const handleChange = (value: number, option: any) => {
+    const handleChange = (value: number) => {
         form.setFieldsValue({ ownerId: value });
     };
-
     const onFinish = async (values: any) => {
         try {
             values.status = parseInt(values.status);
@@ -35,7 +32,6 @@ const AddPost = () => {
             console.error('Lỗi tạo mới:', error);
         }
     };
-
     return (
             <>
                 <h1 className='title'>THÊM</h1>
@@ -76,5 +72,4 @@ const AddPost = () => {
             </>
     );
 };
-
 export default AddPost;

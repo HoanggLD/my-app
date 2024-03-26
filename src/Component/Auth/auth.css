@@ -5,11 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: 'Bai Jamjuree', sans-serif;
 }
-
 .container {
     height: 100vh;
     width: 100%;
@@ -19,7 +17,6 @@ body {
     justify-content: center;
     position: relative;
 }
-
 .form_main {
     width: 500px;
     height: 600px;
@@ -35,7 +32,6 @@ body {
     position: relative;
     overflow: hidden;
 }
-
 .form_main::before {
     position: absolute;
     content: "";
@@ -65,7 +61,6 @@ body {
     justify-content: center;
     z-index: 2;
 }
-
 .inputIcon {
     position: absolute;
     left: 3px;

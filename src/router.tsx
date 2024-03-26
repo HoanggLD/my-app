@@ -12,15 +12,11 @@ import UpdateUser from "./Component/User/UpdateUser";
 export const router = createBrowserRouter([
     {path: "/sigin", element: <AuthForm/>},
     {path: "/login", element: <Login/>},
-
     {path: "", element: <Layouts /> , children: [
         {path: "user", element: <ListUser />},
         {path: "updates/:id", element: <UpdateUser/>},
         {path: "update/:id", element: <UpdatePost />},
         {path: "list", element: <ListPost/>},
         {path: "add", element: <AddPost/>}
-
-
-        
     ]},
 ])

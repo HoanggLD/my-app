@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import {
-    AppstoreOutlined,
-    UserOutlined,
-    CalendarOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, UserOutlined, CalendarOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import { AiFillGold, AiFillSignal } from "react-icons/ai";
-const { Header, Content, Footer, Sider } = Layout;
+import { AiFillSignal } from "react-icons/ai";
+const { Header, Content, Sider } = Layout;
 
 const LayoutAdmin: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-
     return (
         <Layout style={{ minHeight: "100vh" }}>
             <Header
@@ -26,7 +21,6 @@ const LayoutAdmin: React.FC = () => {
             >
                 <Link to={"/"}></Link>
             </Header>
-
             <Layout>
                 <Sider
                     style={{ width: "100px", height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, marginTop: "60px", paddingTop: "20px" }}
@@ -40,34 +34,33 @@ const LayoutAdmin: React.FC = () => {
                     }}
                 >
                     <div />
-
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={["16"]}
+                        defaultSelectedKeys={["10"]}
                         items={[
                             {
-                                key: 16,
+                                key: 1,
                                 icon: <AppstoreOutlined />,
                                 label: <Link to={"/"}>DashBoard</Link>,
                             },
                             {
-                                key: 1,
+                                key: 2,
                                 icon: <AiFillSignal />,
                                 label: <Link to={"/user"}>Tài khoản</Link>,
                             },
                             {
-                                key: 2,
+                                key: 3,
                                 icon: <CalendarOutlined />,
                                 label: <Link to={"/list"}>Danh mục</Link>,
                             },
                             {
-                                key: 3,
+                                key: 4,
                                 icon: <UserOutlined />,
                                 label: "Quản lý tài khoản",
                                 children: [
-                                    { key: 4, icon: <UserOutlined />, label: <Link to={"/sigin"}>Đăng ký</Link> },
-                                    { key: 5, icon: <UserOutlined />, label: <Link to={"/login"}>Đăng nhập</Link> }
+                                    { key: 5, icon: <UserOutlined />, label: <Link to={"/sigin"}>Đăng ký</Link> },
+                                    { key: 6, icon: <UserOutlined />, label: <Link to={"/login"}>Đăng nhập</Link> }
                                 ]
 
                             }

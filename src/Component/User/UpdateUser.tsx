@@ -24,7 +24,6 @@ const UpdateUser: React.FC = () => {
         password: ''
     });
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -39,27 +38,23 @@ const UpdateUser: React.FC = () => {
 
         fetchData();
     }, [id]);
-
     const onFinish = async (values: any) => {
         try {
             const { name, email, phone, status, password } = values;
             const userData = { name, email, phone, status: parseInt(status), password };
             const res = await axios.put(`${UpdateUsers}/${id}`, userData);
             setMess('Cập nhật thành công. Chuyển trang sau 2s.');
+            console.log(res);
             setTimeout(() => {
                 navigate('/user');
             }, 2000);
         } catch (error) {
-
             setMess('Có lỗi xảy ra khi cập nhật người dùng.');
         }
     };
-
     if (loading) {
         return <div>Loading...</div>;
     }
-
-
     return (
         <div className="content">
             <h2 className='titles'>Cập nhật Người Dùng</h2>
@@ -103,5 +98,4 @@ const UpdateUser: React.FC = () => {
         </div>
     );
 };
-
 export default UpdateUser;

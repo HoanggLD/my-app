@@ -9,5 +9,6 @@ export const Adds ='http://localhost:3003/posts'
 export const Lists ='http://localhost:3003/posts'
 export const UpdateUsers = 'http://localhost:3003/auth'
 export const DeletePost = 'http://localhost:3003/posts'
+export const ListUser = 'http://localhost:3003/auth'
 
 
